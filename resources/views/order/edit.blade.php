@@ -44,6 +44,24 @@
                 </div>
             </div>
             <div class="form-group">
+                <label class="col-sm-4 control-label">состав заказа</label>
+                <div class="col-sm-8">
+                    <p class="form-control-static">
+                        @foreach($order->orderProduct as $orderProduct)
+                            {{ $orderProduct->product->name }} - {{ $orderProduct->quantity }} <br>
+                        @endforeach
+                    </p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-4 control-label">стоимость заказа</label>
+                <div class="col-sm-8">
+                    <p class="form-control-static">
+                        {{ $order->sumOrder() }}
+                    </p>
+                </div>
+            </div>
+            <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <button type="submit" class="btn btn-default">Сохранить</button>
                 </div>

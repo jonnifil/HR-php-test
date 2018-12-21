@@ -15,11 +15,17 @@ class Order extends Model
         return $this->belongsTo('App\Partner');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function orderProduct()
     {
         return $this->hasMany('App\OrderProduct');
     }
 
+    /**
+     * @return string
+     */
     public function statusName()
     {
         switch ($this->status) {
@@ -36,6 +42,9 @@ class Order extends Model
         }
     }
 
+    /**
+     * @return int
+     */
     public function sumOrder()
     {
         $sum = 0;
@@ -45,6 +54,9 @@ class Order extends Model
         return $sum;
     }
 
+    /**
+     * @return array
+     */
     public static function getStatuses()
     {
         return [
@@ -52,5 +64,10 @@ class Order extends Model
             ['id'=>10, 'name' => 'подтвержден'],
             ['id'=>20, 'name' => 'завершен'],
         ];
+    }
+
+    public function sendCompleteMails()
+    {
+
     }
 }

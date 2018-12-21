@@ -43,7 +43,7 @@ class OrderController extends Controller
             ->orderBy('delivery_dt', 'desc')
             ->limit(50)
             ->get();
-        return view('orders', [
+        return view('order.index', [
             'overdueOrders' => $overdueOrders,
             'currentOrders' => $currentOrders,
             'newOrders' => $newOrders,
@@ -70,25 +70,26 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'id' => 'required|int',
+            'id' => 'required|integer',
             'client_email' => 'required|email',
-            'partner_id' => 'required|int',
-            'status' => 'required|int',
+            'partner_id' => 'required|integer',
+            'status' => 'required|integer',
         ]);
         $id = $request->input('id');
-        $email = $request->input('client_email');
-        $partner_id = $request->input('partner_id');
         $status = $request->input('status');
-       if (!empty($id)) {
+        if (!empty($id)) {
            $order = Order::find($id);
            if (is_object($order)) {
-               $order->client_email = $email;
-               $order->partner_id = $partner_id;
+               $old_status = $order->status;
+               $order->client_email = $request->input('client_email');
+               $order->partner_id = $request->input('partner_id');
                $order->status = $status;
                $order->save();
-               return redirect('edit/'.$id);
+               if ($old_status != $status && $status == 20)
+                   $order->sendCompleteMails();
+               return redirect('show/'.$id);
            } else return redirect('/');
-       } else return redirect('/');
+        } else return redirect('/');
     }
 
     /**
@@ -99,7 +100,10 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        //
+        $order = Order::find($id);
+        return view('order.show', [
+            'order' =>$order
+        ]);
     }
 
     /**
