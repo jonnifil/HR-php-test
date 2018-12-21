@@ -44,4 +44,13 @@ class Order extends Model
         }
         return $sum;
     }
+
+    public static function getStatuses()
+    {
+        return [
+            ['id'=>0, 'name' => 'новый'],
+            ['id'=>10, 'name' => 'подтвержден'],
+            ['id'=>20, 'name' => 'завершен'],
+        ];
+    }
 }

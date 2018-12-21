@@ -14,3 +14,5 @@
 Route::get('/', 'OrderController@index')->name('home');
 Route::get('products', 'ProductController@index')->name('products');
 Route::get('temp', 'TemperatureController@index')->name('temp');
+Route::get('edit/{id}', 'OrderController@edit')->name('edit_order');
+Route::get('store', 'OrderController@store')->name('order_store');

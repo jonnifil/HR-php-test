@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\Partner;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -28,13 +27,13 @@ class OrderController extends Controller
             ['delivery_dt','<=', date('Y-m-d H:i:s', time() + (24*60*60))],
             ['status', '=', 10]
         ])
-            ->orderBy('delivery_dt', 'desc')
+            ->orderBy('delivery_dt', 'asc')
             ->get();
         $newOrders = Order::where([
             ['delivery_dt','>=', date('Y-m-d H:i:s')],
             ['status', '=', 0]
         ])
-            ->orderBy('delivery_dt', 'desc')
+            ->orderBy('delivery_dt', 'asc')
             ->limit(50)
             ->get();
         $completeOrders = Order::where([
@@ -70,7 +69,26 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'id' => 'required|int',
+            'client_email' => 'required|email',
+            'partner_id' => 'required|int',
+            'status' => 'required|int',
+        ]);
+        $id = $request->input('id');
+        $email = $request->input('client_email');
+        $partner_id = $request->input('partner_id');
+        $status = $request->input('status');
+       if (!empty($id)) {
+           $order = Order::find($id);
+           if (is_object($order)) {
+               $order->client_email = $email;
+               $order->partner_id = $partner_id;
+               $order->status = $status;
+               $order->save();
+               return redirect('edit/'.$id);
+           } else return redirect('/');
+       } else return redirect('/');
     }
 
     /**
@@ -92,7 +110,12 @@ class OrderController extends Controller
      */
     public function edit($id)
     {
-        //
+        $order = Order::find($id);
+        return view('order.edit', [
+            'order' =>$order,
+            'partners' => Partner::all(),
+            'statuses' => Order::getStatuses()
+        ]);
     }
 
     /**

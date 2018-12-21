@@ -38,7 +38,7 @@
                 @foreach ($overdueOrders as $order)
                     <tr>
                         <td>
-                            <a href="">{{ $order->id }}</a>
+                            <a href="{{ route('edit_order', ['id' => $order->id]) }}">{{ $order->id }}</a>
                         </td>
                         <td>
                             {{ $order->partner->name }}
@@ -84,7 +84,7 @@
                 @foreach ($currentOrders as $order)
                     <tr>
                         <td>
-                            <a href="">{{ $order->id }}</a>
+                            <a href="{{ route('edit_order', ['id' => $order->id]) }}">{{ $order->id }}</a>
                         </td>
                         <td>
                             {{ $order->partner->name }}
@@ -130,7 +130,7 @@
                 @foreach ($newOrders as $order)
                     <tr>
                         <td>
-                            <a href="">{{ $order->id }}</a>
+                            <a href="{{ route('edit_order', ['id' => $order->id]) }}">{{ $order->id }}</a>
                         </td>
                         <td>
                             {{ $order->partner->name }}
@@ -176,7 +176,7 @@
                 @foreach ($completeOrders as $order)
                     <tr>
                         <td>
-                            <a href="">{{ $order->id }}</a>
+                            <a href="{{ route('edit_order', ['id' => $order->id]) }}">{{ $order->id }}</a>
                         </td>
                         <td>
                             {{ $order->partner->name }}
