@@ -13,6 +13,7 @@
 
 Route::get('/', 'OrderController@index')->name('home');
 Route::get('products', 'ProductController@index')->name('products');
+Route::post('product/store', 'ProductController@store');
 Route::get('temp', 'TemperatureController@index')->name('temp');
 Route::get('edit/{id}', 'OrderController@edit')->name('edit_order');
 Route::get('show/{id}', 'OrderController@show')->name('show_order');

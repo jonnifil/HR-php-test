@@ -37,7 +37,23 @@
                     {{ $product->vendor->name }}
                 </td>
                 <td>
-                    {{ $product->price }}
+                    <div class="show_price_{{ $product->id }}">
+                        <div id="price_{{ $product->id }}" class="col-md-7">
+                            {{ $product->price }}
+                        </div>
+                        <div class="col-md-5">
+                            <button class="btn btn-lg" onclick="$('.show_price_{{ $product->id }}').toggleClass('hide')"><span class="glyphicon glyphicon-pencil"></span> </button>
+                        </div>
+                    </div>
+                    <div class="hide show_price_{{ $product->id }}">
+                        <div class="col-md-5">
+                            <input class="form-control" value="{{ $product->price }}" id="input_price_{{ $product->id }}">
+                        </div>
+                        <div class="col-md-7">
+                            <button class="btn btn-lg" onclick="$('.show_price_{{ $product->id }}').toggleClass('hide')"><span>Отмена</span> </button>
+                            <button class="btn btn-lg" onclick="savePrice({{ $product->id }})"><span>Сохранить</span> </button>
+                        </div>
+                    </div>
                 </td>
             </tr>
         @endforeach

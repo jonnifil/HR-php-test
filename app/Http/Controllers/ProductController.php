@@ -36,7 +36,17 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            $this->validate($request, [
+                'id' => 'required|integer',
+                'price' => 'required|integer',
+            ]);
+            $id = $request->input('id');
+            $product = Product::find($id);
+            $product->price = $request->input('price');
+            $product->save();
+            return ['result' => true];
+        }
     }
 
     /**

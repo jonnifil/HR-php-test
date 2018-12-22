@@ -2,8 +2,10 @@
 <head>
     <meta charset="utf-8">
     <title>@yield('title')</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" type="text/css" media="all" href="{{URL::asset('css/app.css')}}">
     <script async src="{{URL::asset('js/app.js')}}"></script>
+    <script async src="{{URL::asset('js/script.js')}}"></script>
 </head>
 <body>
 <nav class="navbar navbar-default" role="navigation">
